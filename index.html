@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>InduXpert — Industrial & Business Solutions</title>
+  <meta name="description" content="Premium responsive template for industrial & business services with elegant animations." />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f5f8ff',
+              100: '#e9efff',
+              200: '#cfdcff',
+              300: '#a9beff',
+              400: '#7b97ff',
+              500: '#4f6fff',
+              600: '#3a54e6',
+              700: '#2d41b4',
+              800: '#24358c',
+              900: '#1d2a6e',
+            }
+          },
+          boxShadow: {
+            glow: '0 10px 30px rgba(79,111,255,0.25)',
+          },
+          backgroundImage: {
+            'grid': 'radial-gradient(circle at 1px 1px, rgba(79,111,255,.25) 1px, transparent 0)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; }
+    /* Card hover micro-interaction */
+    .card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+    .card { transition: transform .25s ease, box-shadow .25s ease; will-change: transform; }
+    /* Glass effect */
+    .glass { backdrop-filter: blur(10px); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); }
+    /* Parallax */
+    .parallax { background-position: center; background-size: cover; background-attachment: fixed; }
+    /* Sticky header shadow */
+    .sticky-shadow { box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+    /* FAQ accordion icons */
+    .faq-toggle[aria-expanded="true"] .plus { display:none; }
+    .faq-toggle[aria-expanded="true"] .minus { display:inline; }
+    .faq-toggle .minus { display:none; }
+    /* 3D Tilt */
+    .tilt { transform-style: preserve-3d; perspective: 800px; }
+    .tilt > * { transform: translateZ(0px); }
+    /* Cursor */
+    .cursor-dot { position: fixed; top: 0; left: 0; width: 10px; height: 10px; border-radius: 9999px; pointer-events: none; z-index: 60; mix-blend-mode: multiply; }
+    .cursor-ring { position: fixed; top: 0; left: 0; width: 36px; height: 36px; border-radius: 9999px; pointer-events: none; z-index: 60; border: 2px solid rgba(79,111,255,.45); mix-blend-mode: multiply; }
+    @media (hover:none) { .cursor-dot, .cursor-ring { display:none; } }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+  <!-- Custom Cursor -->
+  <div class="cursor-dot bg-brand-500/70 shadow-glow"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- ===== Header / Navbar ===== -->
+  <header id="top" class="fixed inset-x-0 top-0 z-50 transition-all">
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between rounded-b-2xl bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 mt-2 px-4 shadow-sm">
+        <a href="#" class="flex items-center gap-2">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 text-white shadow-glow">IX</span>
+          <span class="text-lg font-bold">InduXpert</span>
+        </a>
+        <div class="hidden lg:flex items-center gap-8">
+          <a href="#" class="hover:text-brand-600 navlink">home</a>
+          <a href="#services" class="hover:text-brand-600 navlink">Services</a>
+          <a href="#capabilities" class="hover:text-brand-600 navlink">Capabilities</a>
+          <a href="#work" class="hover:text-brand-600 navlink">Case Studies</a>
+          <a href="#pricing" class="hover:text-brand-600 navlink">Plans</a>
+          <a href="#contact" class="hover:text-brand-600 navlink">Contact</a>
+        </div>
+        <div class="hidden lg:flex items-center gap-3">
+          <a href="#contact" class="magnet rounded-xl border border-brand-200 px-4 py-2 text-sm font-semibold hover:bg-brand-50">Get Quote</a>
+          <a href="#pricing" class="magnet rounded-xl bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-glow hover:bg-brand-700">Start Now</a>
+        </div>
+        <button id="menuBtn" class="lg:hidden rounded-xl border px-3 py-2" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobileMenu" class="lg:hidden mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 hidden">
+      <div class="mt-2 rounded-2xl bg-white p-4 shadow-md">
+        <a href="#services" class="block rounded-lg px-3 py-2 hover:bg-slate-50">Services</a>
+        <a href="#capabilities" class="block rounded-lg px-3 py-2 hover:bg-slate-50">Capabilities</a>
+        <a href="#work" class="block rounded-lg px-3 py-2 hover:bg-slate-50">Case Studies</a>
+        <a href="#pricing" class="block rounded-lg px-3 py-2 hover:bg-slate-50">Plans</a>
+        <a href="#contact" class="block rounded-lg px-3 py-2 hover:bg-slate-50">Contact</a>
+        <div class="mt-3 flex gap-3">
+          <a href="#contact" class="flex-1 rounded-xl border px-4 py-2 text-center font-semibold">Get Quote</a>
+          <a href="#pricing" class="flex-1 rounded-xl bg-brand-600 px-4 py-2 text-center font-semibold text-white">Start Now</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="relative pt-28 sm:pt-32 overflow-hidden">
+    <!-- Parallax Layers -->
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute inset-0 parallax" style="background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop');"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-white/70 via-white/40 to-white"></div>
+      <!-- Floating Particles Canvas -->
+      <canvas id="particles" class="absolute inset-0 w-full h-full"></canvas>
+    </div>
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-10 lg:grid-cols-2">
+        <div data-aos="fade-right" data-aos-delay="50">
+          <span class="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold shadow">
+            <span class="inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-500"></span>
+            Future Starts Today...
+          </span>
+          <h1 class="mt-4 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
+            Powering <span class="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">Industrial Innovation</span> & Business Growth
+          </h1>
+          <p class="mt-4 text-lg text-slate-700">From factory floor automation to enterprise-grade maintenance, we design, build, and scale reliable systems that deliver measurable ROI.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="#services" class="magnet rounded-xl bg-brand-600 px-5 py-3 font-semibold text-white shadow-glow hover:bg-brand-700">Explore Services</a>
+            <a href="#work" class="magnet rounded-xl border border-slate-300 bg-white px-5 py-3 font-semibold hover:bg-slate-50">See Case Studies</a>
+          </div>
+          <div class="mt-8 grid grid-cols-3 gap-4 text-center">
+            <div class="rounded-2xl bg-white/70 p-4 shadow card" data-aos="zoom-in" data-aos-delay="100">
+              <div class="text-3xl font-extrabold counter" data-target="450">0</div>
+              <div class="text-xs uppercase tracking-wide text-slate-600">Projects</div>
+            </div>
+            <div class="rounded-2xl bg-white/70 p-4 shadow card" data-aos="zoom-in" data-aos-delay="150">
+              <div class="text-3xl font-extrabold counter" data-target="38" data-suffix="%">0%</div>
+              <div class="text-xs uppercase tracking-wide text-slate-600">Avg. OEE Gain</div>
+            </div>
+            <div class="rounded-2xl bg-white/70 p-4 shadow card" data-aos="zoom-in" data-aos-delay="200">
+              <div class="text-3xl font-extrabold counter" data-target="12">0</div>
+              <div class="text-xs uppercase tracking-wide text-slate-600">Countries</div>
+            </div>
+          </div>
+        </div>
+        <div class="relative" data-aos="fade-left" data-aos-delay="150">
+          <div class="tilt glass card rounded-3xl p-2 shadow-lg">
+            <img class="h-[420px] w-full rounded-2xl object-cover" src="https://images.unsplash.com/photo-1581091870633-1e7eab0908f8?q=80&w=1600&auto=format&fit=crop" alt="Industrial automation panel" />
+            <div class="absolute -bottom-5 left-6 right-6 grid grid-cols-3 gap-3">
+              <div class="rounded-xl bg-white p-3 shadow card">
+                <div class="text-xs text-slate-600">Predictive</div>
+                <div class="font-bold">Maintenance</div>
+              </div>
+              <div class="rounded-xl bg-white p-3 shadow card">
+                <div class="text-xs text-slate-600">IoT</div>
+                <div class="font-bold">Telemetry</div>
+              </div>
+              <div class="rounded-xl bg-white p-3 shadow card">
+                <div class="text-xs text-slate-600">Robotics</div>
+                <div class="font-bold">Integration</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <svg class="-mb-1 mt-24 w-full" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path fill="#ffffff" d="M0,64L48,58.7C96,53,192,43,288,53.3C384,64,480,96,576,117.3C672,139,768,149,864,128C960,107,1056,53,1152,37.3C1248,21,1344,43,1392,53.3L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"/></svg>
+  </section>
+
+  <!-- ===== Logos / Partners ===== -->
+  <section class="py-8">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-6 items-center opacity-80" data-aos="fade-up">
+        <img class="h-8 mx-auto" src="https://dummyimage.com/140x40/ccc/fff&text=Siemens" alt="Partner logo"/>
+        <img class="h-8 mx-auto" src="https://dummyimage.com/140x40/ccc/fff&text=ABB" alt="Partner logo"/>
+        <img class="h-8 mx-auto" src="https://dummyimage.com/140x40/ccc/fff&text=Bosch" alt="Partner logo"/>
+        <img class="h-8 mx-auto" src="https://dummyimage.com/140x40/ccc/fff&text=Honeywell" alt="Partner logo"/>
+        <img class="h-8 mx-auto" src="https://dummyimage.com/140x40/ccc/fff&text=Rockwell" alt="Partner logo"/>
+        <img class="h-8 mx-auto" src="https://dummyimage.com/140x40/ccc/fff&text=Schneider" alt="Partner logo"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Services ===== -->
+  <section id="services" class="py-16 sm:py-24 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center" data-aos="fade-up">
+        <h2 class="text-3xl font-extrabold sm:text-4xl">End‑to‑End Industrial Services</h2>
+        <p class="mt-3 text-slate-600">Consulting • Design • Integration • Monitoring • Support</p>
+      </div>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- 6 service cards (unchanged content, now tilt + gsap on enter) -->
+        <!-- Card 1 -->
+        <div class="tilt card rounded-2xl bg-slate-50 p-6 shadow" data-stagger>
+          <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-700" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v2H4zM4 9h16v2H4zM4 14h10v2H4z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold">Automation & Controls</h3>
+          <p class="mt-2 text-slate-600">PLC/SCADA engineering, servo drives, VFD tuning, and HMI design for efficient operations.</p>
+          <a href="#contact" class="mt-4 inline-flex items-center gap-2 font-semibold text-brand-700">Get a demo <span aria-hidden>→</span></a>
+        </div>
+        <!-- Card 2 -->
+        <div class="tilt card rounded-2xl bg-slate-50 p-6 shadow" data-stagger>
+          <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-700" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a9 9 0 100 18 9 9 0 000-18zm1 13h-2V7h2v8z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold">Predictive Maintenance</h3>
+          <p class="mt-2 text-slate-600">Vibration analysis, thermal imaging, and ML‑driven failure prediction to cut downtime.</p>
+          <a href="#contact" class="mt-4 inline-flex items-center gap-2 font-semibold text-brand-700">Learn more <span aria-hidden>→</span></a>
+        </div>
+        <!-- Card 3 -->
+        <div class="tilt card rounded-2xl bg-slate-50 p-6 shadow" data-stagger>
+          <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-700" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v12H4zM2 8h20v8H2z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold">Industrial IoT & Telemetry</h3>
+          <p class="mt-2 text-slate-600">Sensor networks, data lakes, dashboards, and alerting—securely at scale.</p>
+          <a href="#contact" class="mt-4 inline-flex items-center gap-2 font-semibold text-brand-700">View dashboards <span aria-hidden>→</span></a>
+        </div>
+        <!-- Card 4 -->
+        <div class="tilt card rounded-2xl bg-slate-50 p-6 shadow" data-stagger>
+          <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-700" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l4 8H8l4-8zm0 8l8 10H4L12 11z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold">Robotics & Material Handling</h3>
+          <p class="mt-2 text-slate-600">Pick-and-place, AGVs, and cobot integration improving throughput and safety.</p>
+          <a href="#contact" class="mt-4 inline-flex items-center gap-2 font-semibold text-brand-700">See integrations <span aria-hidden>→</span></a>
+        </div>
+        <!-- Card 5 -->
+        <div class="tilt card rounded-2xl bg-slate-50 p-6 shadow" data-stagger>
+          <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-700" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v16H4zM8 8h8v8H8z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold">Quality & Compliance</h3>
+          <p class="mt-2 text-slate-600">SPC, traceability, and audit‑ready documentation that meets global standards.</p>
+          <a href="#contact" class="mt-4 inline-flex items-center gap-2 font-semibold text-brand-700">Audit checklist <span aria-hidden>→</span></a>
+        </div>
+        <!-- Card 6 -->
+        <div class="tilt card rounded-2xl bg-slate-50 p-6 shadow" data-stagger>
+          <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-700" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l9 4v6c0 5-4 9-9 10-5-1-9-5-9-10V6l9-4z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold">Safety & Training</h3>
+          <p class="mt-2 text-slate-600">Loto, hazard analysis, and immersive training modules to elevate safety culture.</p>
+          <a href="#contact" class="mt-4 inline-flex items-center gap-2 font-semibold text-brand-700">Train your team <span aria-hidden>→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Capabilities ===== -->
+  <section id="capabilities" class="relative py-16 sm:py-24 bg-gradient-to-b from-white to-brand-50/40">
+    <div class="pointer-events-none absolute inset-0 bg-grid bg-[length:22px_22px]"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-10 lg:grid-cols-2 items-center">
+        <div data-aos="fade-right">
+          <h2 class="text-3xl font-extrabold sm:text-4xl">State‑of‑the‑Art Facilities</h2>
+          <p class="mt-3 text-slate-700">Our labs and testbeds simulate real‑world conditions for rapid prototyping and validation before deployment.</p>
+          <ul class="mt-6 grid gap-3">
+            <li class="flex items-start gap-3"><span class="mt-1 inline-block h-2 w-2 rounded-full bg-brand-600"></span> CNC machining + precision metrology</li>
+            <li class="flex items-start gap-3"><span class="mt-1 inline-block h-2 w-2 rounded-full bg-brand-600"></span> Robotics cell with cobots & vision</li>
+            <li class="flex items-start gap-3"><span class="mt-1 inline-block h-2 w-2 rounded-full bg-brand-600"></span> IoT device farm & stress testing rigs</li>
+            <li class="flex items-start gap-3"><span class="mt-1 inline-block h-2 w-2 rounded-full bg-brand-600"></span> UL/CE pre‑compliance bench</li>
+          </ul>
+          <div class="mt-6 flex gap-3">
+            <a href="#work" class="magnet rounded-xl bg-slate-900 px-5 py-3 font-semibold text-white hover:bg-slate-800">View Lab Results</a>
+            <a href="#contact" class="magnet rounded-xl border px-5 py-3 font-semibold">Schedule a Visit</a>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
+          <img class="h-56 w-full rounded-2xl object-cover card tilt" src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop" alt="Robotics cell"/>
+          <img class="h-56 w-full rounded-2xl object-cover card tilt" src="https://images.unsplash.com/photo-1582560475093-61c1c78de7cb?q=80&w=1200&auto=format&fit=crop" alt="CNC machining"/>
+          <img class="h-56 w-full rounded-2xl object-cover card tilt" src="https://images.unsplash.com/photo-1581093588401-16ec6ce31d23?q=80&w=1200&auto=format&fit=crop" alt="Electronics lab"/>
+          <img class="h-56 w-full rounded-2xl object-cover card tilt" src="https://images.unsplash.com/photo-1581093588400-7ab0a2c6b10e?q=80&w=1200&auto=format&fit=crop" alt="Industrial sensors"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Case Studies (snap) ===== -->
+  <section id="work" class="py-16 sm:py-24 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex items-end justify-between" data-aos="fade-up">
+        <div>
+          <h2 class="text-3xl font-extrabold sm:text-4xl">Case Studies</h2>
+          <p class="mt-2 text-slate-600">Real outcomes from recent deployments</p>
+        </div>
+        <div class="text-sm text-slate-500">Drag ↔ to explore</div>
+      </div>
+      <div class="mt-8 overflow-x-auto pb-4">
+        <div class="flex snap-x snap-mandatory gap-6 min-w-full">
+          <!-- 4 study cards -->
+          <article class="snap-start min-w-[320px] sm:min-w-[420px] tilt card rounded-2xl bg-slate-50 p-5 shadow" data-stagger>
+            <img class="h-48 w-full rounded-xl object-cover" src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?q=80&w=1200&auto=format&fit=crop" alt="Assembly line"/>
+            <h3 class="mt-4 text-xl font-bold">Automotive Line Optimization</h3>
+            <p class="mt-1 text-sm text-slate-600">Cycle time reduced by 18% using PLC optimization and takt time balancing.</p>
+            <a href="#contact" class="mt-3 inline-flex items-center gap-1 font-semibold text-brand-700">Read more →</a>
+          </article>
+          <article class="snap-start min-w-[320px] sm:min-w-[420px] tilt card rounded-2xl bg-slate-50 p-5 shadow" data-stagger>
+            <img class="h-48 w-full rounded-xl object-cover" src="https://images.unsplash.com/photo-1567784177951-6fa58317e16b?q=80&w=1200&auto=format&fit=crop" alt="Warehouse automation"/>
+            <h3 class="mt-4 text-xl font-bold">Smart Warehouse Retrofit</h3>
+            <p class="mt-1 text-sm text-slate-600">AGVs + vision guidance improved throughput by 24% with safer aisles.</p>
+            <a href="#contact" class="mt-3 inline-flex items-center gap-1 font-semibold text-brand-700">Read more →</a>
+          </article>
+          <article class="snap-start min-w-[320px] sm:min-w-[420px] tilt card rounded-2xl bg-slate-50 p-5 shadow" data-stagger>
+            <img class="h-48 w-full rounded-xl object-cover" src="https://images.unsplash.com/photo-1560785496-3c9d27877182?q=80&w=1200&auto=format&fit=crop" alt="Food processing"/>
+            <h3 class="mt-4 text-xl font-bold">Food Processing Traceability</h3>
+            <p class="mt-1 text-sm text-slate-600">End‑to‑end digital tracking, audit time reduced from days to minutes.</p>
+            <a href="#contact" class="mt-3 inline-flex items-center gap-1 font-semibold text-brand-700">Read more →</a>
+          </article>
+          <article class="snap-start min-w-[320px] sm:min-w-[420px] tilt card rounded-2xl bg-slate-50 p-5 shadow" data-stagger>
+            <img class="h-48 w-full rounded-xl object-cover" src="https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?q=80&w=1200&auto=format&fit=crop" alt="Energy monitoring"/>
+            <h3 class="mt-4 text-xl font-bold">Energy Monitoring @ Scale</h3>
+            <p class="mt-1 text-sm text-slate-600">IoT meters + analytics cut energy costs by 14% across 5 plants.</p>
+            <a href="#contact" class="mt-3 inline-flex items-center gap-1 font-semibold text-brand-700">Read more →</a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Process Timeline ===== -->
+  <section class="py-16 sm:py-24 bg-gradient-to-b from-white to-slate-100">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center" data-aos="fade-up">
+        <h2 class="text-3xl font-extrabold sm:text-4xl">How We Work</h2>
+        <p class="mt-2 text-slate-600">Transparent, collaborative, outcome‑driven.</p>
+      </div>
+      <ol class="relative mx-auto mt-10 max-w-3xl border-s border-slate-200 pl-6">
+        <li class="mb-10" data-stagger>
+          <span class="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-brand-600 text-white text-xs">1</span>
+          <h3 class="font-bold">Assessment & Discovery</h3>
+          <p class="text-slate-600">On‑site audit, interviews, and data capture to map constraints and KPIs.</p>
+        </li>
+        <li class="mb-10" data-stagger>
+          <span class="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-brand-600 text-white text-xs">2</span>
+          <h3 class="font-bold">Design & Simulation</h3>
+          <p class="text-slate-600">Digital twins & FMEAs to validate options before committing to hardware.</p>
+        </li>
+        <li class="mb-10" data-stagger>
+          <span class="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-brand-600 text-white text-xs">3</span>
+          <h3 class="font-bold">Implementation</h3>
+          <p class="text-slate-600">Commissioning, operator training, and change management.</p>
+        </li>
+        <li data-stagger>
+          <span class="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-brand-600 text-white text-xs">4</span>
+          <h3 class="font-bold">Monitoring & Support</h3>
+          <p class="text-slate-600">SLAs, remote monitoring, and continuous improvement cycles.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== Pricing ===== -->
+  <section id="pricing" class="py-16 sm:py-24 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center" data-aos="fade-up">
+        <h2 class="text-3xl font-extrabold sm:text-4xl">Flexible Plans</h2>
+        <p class="mt-2 text-slate-600">Simple pricing that scales with your needs.</p>
+      </div>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Tier -->
+        <div class="tilt card rounded-2xl border p-6" data-stagger>
+          <div class="text-sm font-semibold text-brand-700">Starter</div>
+          <div class="mt-2 text-4xl font-extrabold">$799<span class="text-base font-semibold text-slate-500">/mo</span></div>
+          <ul class="mt-4 space-y-2 text-slate-700">
+            <li>↳ 1 production line</li>
+            <li>↳ Basic dashboards</li>
+            <li>↳ Email support</li>
+          </ul>
+          <a href="#contact" class="magnet mt-6 inline-block w-full rounded-xl border px-4 py-2 text-center font-semibold">Choose Starter</a>
+        </div>
+        <div class="tilt card rounded-2xl border p-6 ring-2 ring-brand-600" data-stagger>
+          <div class="text-sm font-semibold text-brand-700">Growth</div>
+          <div class="mt-2 text-4xl font-extrabold">$2,499<span class="text-base font-semibold text-slate-500">/mo</span></div>
+          <ul class="mt-4 space-y-2 text-slate-700">
+            <li>↳ Up to 5 lines</li>
+            <li>↳ Predictive maintenance</li>
+            <li>↳ 24/7 priority support</li>
+          </ul>
+          <a href="#contact" class="magnet mt-6 inline-block w-full rounded-xl bg-brand-600 px-4 py-2 text-center font-semibold text-white">Choose Growth</a>
+        </div>
+        <div class="tilt card rounded-2xl border p-6" data-stagger>
+          <div class="text-sm font-semibold text-brand-700">Enterprise</div>
+          <div class="mt-2 text-4xl font-extrabold">Custom</div>
+          <ul class="mt-4 space-y-2 text-slate-700">
+            <li>↳ Unlimited sites</li>
+            <li>↳ On‑prem & hybrid</li>
+            <li>↳ Dedicated CSM</li>
+          </ul>
+          <a href="#contact" class="magnet mt-6 inline-block w-full rounded-xl border px-4 py-2 text-center font-semibold">Talk to Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Testimonials ===== -->
+  <section class="py-16 sm:py-24 bg-gradient-to-b from-white to-slate-100">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center" data-aos="fade-up">
+        <h2 class="text-3xl font-extrabold sm:text-4xl">What Clients Say</h2>
+        <p class="mt-2 text-slate-600">Trusted by manufacturers worldwide</p>
+      </div>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <figure class="tilt card rounded-2xl bg-white p-6 shadow" data-stagger>
+          <blockquote class="text-slate-700">“Downtime dropped dramatically within weeks. Their team knows shop‑floor realities.”</blockquote>
+          <figcaption class="mt-4 flex items-center gap-3">
+            <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?q=80&w=200&auto=format&fit=crop" alt="Avatar"/>
+            <div>
+              <div class="font-semibold">Priya N.</div>
+              <div class="text-sm text-slate-500">Plant Manager, Auto OEM</div>
+            </div>
+          </figcaption>
+        </figure>
+        <figure class="tilt card rounded-2xl bg-white p-6 shadow" data-stagger>
+          <blockquote class="text-slate-700">“Their dashboards finally made our energy costs visible and controllable.”</blockquote>
+          <figcaption class="mt-4 flex items-center gap-3">
+            <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" alt="Avatar"/>
+            <div>
+              <div class="font-semibold">Marco D.</div>
+              <div class="text-sm text-slate-500">Ops Lead, FMCG</div>
+            </div>
+          </figcaption>
+        </figure>
+        <figure class="tilt card rounded-2xl bg-white p-6 shadow" data-stagger>
+          <blockquote class="text-slate-700">“Zero‑accident quarter after their safety revamp. Training quality is top‑notch.”</blockquote>
+          <figcaption class="mt-4 flex items-center gap-3">
+            <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=200&auto=format&fit=crop" alt="Avatar"/>
+            <div>
+              <div class="font-semibold">Amira K.</div>
+              <div class="text-sm text-slate-500">HSE Director, Chemicals</div>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="py-16 sm:py-24 bg-white" id="faq">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center" data-aos="fade-up">
+        <h2 class="text-3xl font-extrabold sm:text-4xl">FAQ</h2>
+        <p class="mt-2 text-slate-600">Quick answers to common questions</p>
+      </div>
+      <div class="mx-auto mt-10 max-w-3xl divide-y rounded-2xl border bg-slate-50/60">
+        <!-- Item -->
+        <details class="group open:bg-white px-6 py-4 transition" data-stagger>
+          <summary class="faq-toggle flex cursor-pointer list-none items-center justify-between py-2 font-semibold">
+            <span>Do you work internationally?</span>
+            <span class="plus">＋</span><span class="minus">－</span>
+          </summary>
+          <p class="pb-2 text-slate-700">Yes, our teams operate across APAC, EMEA, and the Americas with local partners.</p>
+        </details>
+        <details class="group px-6 py-4 transition" data-stagger>
+          <summary class="faq-toggle flex cursor-pointer list-none items-center justify-between py-2 font-semibold">
+            <span>How do you calculate ROI?</span>
+            <span class="plus">＋</span><span class="minus">－</span>
+          </summary>
+          <p class="pb-2 text-slate-700">We baseline KPIs (OEE, scrap, energy) and track improvements vs. control groups.</p>
+        </details>
+        <details class="group px-6 py-4 transition" data-stagger>
+          <summary class="faq-toggle flex cursor-pointer list-none items-center justify-between py-2 font-semibold">
+            <span>Can you integrate with legacy PLCs?</span>
+            <span class="plus">＋</span><span class="minus">－</span>
+          </summary>
+          <p class="pb-2 text-slate-700">Absolutely—OPC UA, Modbus, and vendor SDKs are part of our toolkit.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section id="contact" class="relative py-16 sm:py-24 bg-gradient-to-b from-white to-brand-50/40">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-10 lg:grid-cols-2 items-start">
+        <div data-aos="fade-right">
+          <h2 class="text-3xl font-extrabold sm:text-4xl">Request a Quote</h2>
+          <p class="mt-2 text-slate-700">Tell us about your site and goals. We’ll get back within 1 business day.</p>
+          <form class="mt-6 grid gap-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <input class="rounded-xl border px-4 py-3" type="text" placeholder="Full name" required />
+              <input class="rounded-xl border px-4 py-3" type="email" placeholder="Work email" required />
+            </div>
+            <input class="rounded-xl border px-4 py-3" type="text" placeholder="Company" />
+            <select class="rounded-xl border px-4 py-3">
+              <option value="">Project Type</option>
+              <option>Automation</option>
+              <option>Predictive Maintenance</option>
+              <option>IoT & Data</option>
+              <option>Robotics</option>
+              <option>Safety & Training</option>
+            </select>
+            <textarea class="rounded-xl border px-4 py-3" rows="4" placeholder="Project brief..."></textarea>
+            <button type="submit" class="magnet rounded-xl bg-brand-600 px-5 py-3 font-semibold text-white shadow-glow hover:bg-brand-700">Send Request</button>
+          </form>
+        </div>
+        <div data-aos="fade-left">
+          <div class="rounded-2xl bg-white p-4 shadow card tilt">
+            <img class="h-64 w-full rounded-xl object-cover" src="https://images.unsplash.com/photo-1538688423619-8c8830ce3d32?q=80&w=1600&auto=format&fit=crop" alt="Office"/>
+            <div class="mt-4 grid gap-2 text-sm">
+              <div class="font-semibold">Head Office</div>
+              <div> Global Park, Pune 411057</div>
+              <div>Mon–Fri, 9:00–18:00 IST</div>
+              <a href="mailto:sales@induxpert.com" class="text-brand-700 font-semibold">sales@induxpert.com</a>
+            </div>
+            <div class="mt-4 grid grid-cols-2 gap-3">
+              <a href="#" class="magnet rounded-xl border px-4 py-2 text-center font-semibold">Download Brochure</a>
+              <a href="#" class="magnet rounded-xl bg-slate-900 px-4 py-2 text-center font-semibold text-white">Book a Call</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="mt-10 border-t bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 text-white">IX</span>
+            <span class="text-lg font-bold">InduXpert</span>
+          </div>
+          <p class="mt-3 text-sm text-slate-600">Engineering reliable outcomes for modern industry.</p>
+        </div>
+        <div>
+          <div class="font-semibold">Company</div>
+          <ul class="mt-3 space-y-2 text-sm text-slate-700">
+            <li><a class="hover:text-brand-700" href="#work">Case Studies</a></li>
+            <li><a class="hover:text-brand-700" href="#services">Services</a></li>
+            <li><a class="hover:text-brand-700" href="#pricing">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-semibold">Resources</div>
+          <ul class="mt-3 space-y-2 text-sm text-slate-700">
+            <li><a class="hover:text-brand-700" href="#faq">FAQ</a></li>
+            <li><a class="hover:text-brand-700" href="#">Blog</a></li>
+            <li><a class="hover:text-brand-700" href="#">Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-semibold">Get in touch</div>
+          <ul class="mt-3 space-y-2 text-sm text-slate-700">
+            <li>+91 333 444 555</li>
+            <li>go@induxpert.com</li>
+            <li>Pune • mumbai • nashik</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8 flex flex-col-reverse items-center justify-between gap-4 border-t pt-6 text-sm text-slate-500 sm:flex-row">
+        <div>© <span id="yr"></span> InduXpert Pvt Ltd. All rights reserved.</div>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-slate-900">Privacy</a>
+          <a href="#" class="hover:text-slate-900">Terms</a>
+          <a href="#" class="hover:text-slate-900">Back to top ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- AOS Script -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 700, easing: 'ease-out-quart', offset: 80 });
+  </script>
+
+  <!-- Interactions & Utilities (GSAP-driven) -->
+  <script>
+    // ===== Helpers
+    const clamp = (min, v, max) => Math.max(min, Math.min(v, max));
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    // Sticky header shadow on scroll
+    const header = document.querySelector('header');
+    const onScroll = () => { if (window.scrollY > 8) header.classList.add('sticky-shadow'); else header.classList.remove('sticky-shadow'); };
+    document.addEventListener('scroll', onScroll); onScroll();
+
+    // Current year
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // ===== Custom Cursor
+    const dot = document.querySelector('.cursor-dot');
+    const ring = document.querySelector('.cursor-ring');
+    let mouseX = 0, mouseY = 0; let ringX = 0, ringY = 0;
+    window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+    gsap.ticker.add(() => {
+      gsap.set(dot, { x: mouseX - 5, y: mouseY - 5 });
+      ringX += (mouseX - ringX) * 0.12; ringY += (mouseY - ringY) * 0.12;
+      gsap.set(ring, { x: ringX - 18, y: ringY - 18 });
+    });
+
+    // Emphasize interactive elements
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => gsap.to(ring, { scale: 1.4, duration: .2 }));
+      el.addEventListener('mouseleave', () => gsap.to(ring, { scale: 1.0, duration: .2 }));
+    });
+
+    // ===== Magnetic Buttons
+    document.querySelectorAll('.magnet').forEach(btn => {
+      const strength = 20; // px
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const relX = e.clientX - rect.left - rect.width/2;
+        const relY = e.clientY - rect.top  - rect.height/2;
+        gsap.to(btn, { x: clamp(-strength, relX * 0.2, strength), y: clamp(-strength, relY * 0.2, strength), duration: .25, ease: 'power3.out' });
+      });
+      btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: .35, ease: 'power3.out' }));
+    });
+
+    // ===== Tilt on hover
+    const tiltify = (el) => {
+      let bounds;
+      const enter = () => { bounds = el.getBoundingClientRect(); gsap.to(el, { rotateX: 0, rotateY: 0, scale: 1.02, duration: .3, transformPerspective: 800, transformOrigin: 'center' }); };
+      const move = (e) => {
+        const px = (e.clientX - bounds.left) / bounds.width - 0.5;
+        const py = (e.clientY - bounds.top) / bounds.height - 0.5;
+        gsap.to(el, { rotateX: clamp(-8, -py * 12, 8), rotateY: clamp(-8, px * 12, 8), duration: .2 });
+      };
+      const leave = () => gsap.to(el, { rotateX: 0, rotateY: 0, scale: 1, duration: .5, ease: 'power3.out' });
+      el.addEventListener('mouseenter', enter);
+      el.addEventListener('mousemove', move);
+      el.addEventListener('mouseleave', leave);
+    };
+    document.querySelectorAll('.tilt').forEach(tiltify);
+
+    // ===== Particle Background (subtle)
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let w, h, dpr; const particles = [];
+    const resize = () => { dpr = window.devicePixelRatio || 1; w = canvas.clientWidth; h = canvas.clientHeight; canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    const makeParticle = () => ({ x: Math.random()*w, y: Math.random()*h, vx: (Math.random()-.5)*.3, vy: (Math.random()-.5)*.3, r: Math.random()*2+0.5, a: Math.random()*0.6+0.2 });
+    const draw = () => {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = 'rgba(79,111,255,0.6)';
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1; if (p.y < 0 || p.y > h) p.vy *= -1;
+        ctx.globalAlpha = p.a; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    };
+    const initParticles = () => { particles.length = 0; for (let i=0;i<80;i++) particles.push(makeParticle()); };
+    resize(); initParticles(); draw();
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+
+    // ===== Counters (animate on view)
+    const animateCounter = (el) => {
+      const target = Number(el.dataset.target || '0');
+      const suffix = el.dataset.suffix || '';
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: target, duration: 1.6, ease: 'power2.out',
+        onUpdate: () => { el.textContent = (suffix === '%' ? Math.round(obj.val) : Math.floor(obj.val)) + suffix; }
+      });
+    };
+    document.querySelectorAll('.counter').forEach(el => {
+      ScrollTrigger.create({ trigger: el, once: true, start: 'top 80%', onEnter: () => animateCounter(el) });
+    });
+
+    // ===== Stagger reveals with GSAP
+    gsap.utils.toArray('[data-stagger]').forEach((el, i) => {
+      gsap.from(el, {
+        opacity: 0, y: 30, scale: 0.98, duration: 0.6, ease: 'power2.out', delay: (i % 3) * 0.06,
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
+      });
+    });
+
+    // ===== Section headline underline sweep
+    document.querySelectorAll('section h2').forEach(h2 => {
+      const underline = document.createElement('span');
+      underline.className = 'block h-[3px] w-0 mt-2 bg-gradient-to-r from-brand-600 to-brand-400 rounded-full';
+      h2.after(underline);
+      gsap.to(underline, { width: '120px', duration: .8, ease: 'power3.out', scrollTrigger: { trigger: h2, start: 'bottom 95%', once: true } });
+    });
+
+    // ===== Parallax on hero image group
+    const heroCards = document.querySelectorAll('.glass.card .card');
+    heroCards.forEach((c, i) => {
+      gsap.fromTo(c, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .8, delay: i * .1, ease: 'power3.out', scrollTrigger: { trigger: c, start: 'top 95%', once: true } });
+    });
+
+    // ===== Active nav highlight
+    const links = document.querySelectorAll('.navlink');
+    const sections = ['services','capabilities','work','pricing','contact'];
+    sections.forEach(id => {
+      const s = document.getElementById(id);
+      if (!s) return;
+      ScrollTrigger.create({
+        trigger: s, start: 'top center', end: 'bottom center',
+        onEnter: () => setActive(id), onEnterBack: () => setActive(id)
+      });
+    });
+    function setActive(id){ links.forEach(a => a.classList.toggle('text-brand-700', a.getAttribute('href') === '#' + id)); }
+  </script>
+</body>
+</html>
